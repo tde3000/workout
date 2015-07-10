@@ -3,12 +3,38 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+	<header>
+		<h1> workouts
+		</h1>
+	
+		{{> datepicker}}
 
-  {{> hello}}
+<!--		<form class="new-excercise">
+			<input type="text" name="text" placeholder="Add an exercise"> 
+			sets:
+			<input type="number" name="sets" min="1" size="5">
+			</form> -->
+
+	</header>
+	<ul>
+		{{#each workouts}}
+			{{> workout}}
+		{{/each}}
+	</ul>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="workout">
+	<li>
+		<span>{{name}}</span>
+		{{#each reps}}
+		<span> {{this}} </span>
+		{{/each}}
+	</li>
+
+</template>
+
+<template name="datepicker">
+		<form class="date-picker">
+						<input type="date" name="date" id="date" >
+		</form>
 </template>

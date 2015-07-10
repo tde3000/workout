@@ -1,23 +1,28 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+// Create the collection for workouts
+Workouts = new Mongo.Collection("workouts");
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
-  });
+if(Meteor.isClient){
+	Template.datepicker.rendered = function(){
+		document.getElementById('date').valueAsDate = new Date();
+		Session.set("date", document.getElementById('date').value);
+	};	
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
+	Template.datepicker.events({
+		"change .date-picker": function(){
+		Session.set("date", document.getElementById('date').value);
+		}
+	});
+
+	Template.body.helpers({
+		date: function(){
+			return Session.get("date");
+		},
+		workouts: function(){
+			return Workouts.find({});
+		}
+	});
+
+
 }
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+
